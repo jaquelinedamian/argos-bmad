@@ -1,434 +1,365 @@
-# Spec 01 — Pessoas que Eu Cuido
+# Flow 01 — Pessoas que Eu Cuido
 
-## 1. Identificação do módulo
+## 1. Objetivo do fluxo
 
-**Nome do módulo:** Pessoas que Eu Cuido  
-**Tipo:** Módulo funcional principal  
-**Contexto:** Home Care 4.0 / Argos Saúde  
-**Prioridade:** Alta  
-**Status:** Em definição funcional
+Descrever, de forma detalhada, o fluxo de navegação, decisão, resposta do sistema e estados possíveis do módulo “Pessoas que Eu Cuido”.
 
----
-
-## 2. Objetivo do módulo
-
-Permitir que o usuário visualize, organize e acesse rapidamente as pessoas sob sua responsabilidade de cuidado.
-
-Este módulo funciona como ponto central de acompanhamento, facilitando o acesso aos dados, alertas, agenda, sinais vitais, documentos e ações relacionadas a cada paciente vinculado.
-
-Além disso, deve permitir o cadastro de uma nova pessoa cuidada, quando o perfil ativo do usuário possuir permissão para isso.
+Este fluxo deve garantir clareza para:
+- UX
+- UI
+- front-end
+- documentação funcional
 
 ---
 
-## 3. Problema que este módulo resolve
+## 2. Contexto do fluxo
 
-No contexto do cuidado, é comum que familiares, cuidadores e profissionais precisem acompanhar mais de uma pessoa ao mesmo tempo.
+O módulo “Pessoas que Eu Cuido” é a entrada operacional para usuários que acompanham pacientes.
 
-Sem uma área centralizada:
-- a navegação fica confusa
-- o acesso às informações se torna lento
-- o acompanhamento perde eficiência
-- eventos importantes podem passar despercebidos
-
-O módulo “Pessoas que Eu Cuido” resolve isso criando uma entrada clara para gestão e acompanhamento das pessoas vinculadas ao usuário.
+O fluxo deve permitir:
+- visualizar pessoas vinculadas
+- localizar rapidamente uma pessoa
+- identificar estados importantes
+- acessar detalhes
+- iniciar cadastro de nova pessoa, quando permitido
 
 ---
 
-## 4. Perfis envolvidos
+## 3. Perfis envolvidos
 
-### Perfis que podem acessar o módulo
+### Podem acessar o fluxo
 - familiar/cuidador
 - prestador de serviço
-- administrador, quando aplicável
+- administrador, quando permitido
 
-### Perfil que pode aparecer como item acompanhado
+### Papel exibido como item listado
 - paciente
 
-### Observação importante
-Como o sistema trabalha com usuário único e múltiplos papéis, o acesso ao módulo depende do **papel ativo** no momento da navegação.
+### Regra principal
+O fluxo depende do papel ativo do usuário no momento do acesso.
 
 ---
 
-## 5. Objetivos do usuário dentro deste módulo
+## 4. Pré-condições
 
-O usuário entra neste módulo para:
-
-- visualizar todas as pessoas vinculadas ao seu cuidado
-- identificar rapidamente o estado geral de cada pessoa
-- acessar dados detalhados de uma pessoa específica
-- cadastrar uma nova pessoa sob cuidado
-- localizar alguém rapidamente por busca ou filtro
-- acompanhar alertas, sinais e compromissos de forma resumida
+- usuário autenticado
+- papel ativo definido
+- permissão válida para acesso ao módulo
+- existência ou não de vínculos com pacientes
+- disponibilidade dos dados necessários para resumo da listagem
 
 ---
 
-## 6. Pré-condições
+## 5. Entrada do fluxo
 
-Para que o módulo funcione corretamente, algumas condições devem existir:
+O usuário pode chegar ao módulo por:
 
-- o usuário deve estar autenticado
-- o sistema deve reconhecer o papel ativo atual
-- o usuário deve possuir permissão para visualizar pessoas vinculadas
-- devem existir vínculos cadastrados entre o usuário e os pacientes, exceto no caso de primeira utilização
-- para cadastrar nova pessoa, o usuário deve possuir permissão de criação
-
----
-
-## 7. Pós-condições esperadas
-
-Após usar este módulo, o usuário deve conseguir:
-
-- encontrar rapidamente quem acompanha
-- entender a situação geral de cada pessoa
-- entrar na área detalhada de um paciente
-- iniciar o fluxo de cadastro de nova pessoa, quando permitido
+- menu principal
+- dashboard
+- atalho contextual
+- retorno de fluxo de cadastro
 
 ---
 
-## 8. Estrutura funcional da tela
+## 6. Fluxo principal
 
-A tela deve conter, no mínimo, os seguintes blocos:
+### Fluxo principal A — Visualização da lista
 
-### 8.1 Cabeçalho da página
-Elementos:
-- título da tela: **Pessoas que Eu Cuido**
-- subtítulo contextual, quando necessário
-- botão principal: **Cadastrar nova pessoa**
-- campo de busca
-- filtros
-
-### 8.2 Área de resumo
-Pode exibir:
-- total de pessoas vinculadas
-- quantidade com alerta ativo
-- quantidade com consulta próxima
-- quantidade sem intercorrências recentes
-
-### 8.3 Lista principal de pessoas
-Cada item deve exibir, de forma resumida:
-
-- foto ou avatar
-- nome da pessoa
-- idade
-- relação com o usuário, quando relevante
-- estado resumido
-- indicador de alerta, se houver
-- próxima consulta ou compromisso, se houver
-- última atualização importante
-- botão de acesso aos detalhes
-
-### 8.4 Estado vazio
-Quando não houver pessoas vinculadas, a tela deve exibir:
-- mensagem clara
-- orientação sobre o que fazer
-- botão para cadastrar nova pessoa, se permitido
+1. usuário acessa o módulo “Pessoas que Eu Cuido”
+2. sistema valida autenticação
+3. sistema identifica papel ativo
+4. sistema verifica permissão de acesso ao módulo
+5. sistema busca pessoas vinculadas ao usuário no contexto atual
+6. sistema busca informações resumidas de cada pessoa:
+   - nome
+   - idade
+   - vínculo
+   - status geral
+   - alertas ativos
+   - próxima consulta
+7. sistema monta a interface da tela
+8. usuário visualiza a listagem
+9. usuário pode:
+   - buscar uma pessoa
+   - aplicar filtros
+   - ordenar a lista
+   - abrir detalhes
+   - cadastrar nova pessoa, se tiver permissão
 
 ---
 
-## 9. Componentes da interface
+### Fluxo principal B — Acessar detalhes de uma pessoa
 
-### Componentes principais
-- cabeçalho da página
-- botão de ação principal
-- campo de busca
-- filtros
-- cards ou linhas de listagem
-- indicadores de status
-- badges de alerta
-- botão “Ver detalhes”
-- estado vazio
-- feedback de carregamento
-- feedback de erro
-
-### Componentes reutilizáveis
-- card de pessoa acompanhada
-- badge de criticidade
-- indicador de próxima consulta
-- resumo rápido de saúde
-- caixa de busca
-- filtro por categoria
+1. usuário visualiza a lista
+2. usuário identifica a pessoa desejada
+3. usuário clica no card ou botão “Ver detalhes”
+4. sistema valida se o vínculo permite acesso ao detalhe
+5. sistema redireciona para a tela de detalhes da pessoa
+6. sistema carrega o perfil detalhado
 
 ---
 
-## 10. Informações exibidas por pessoa
+### Fluxo principal C — Cadastrar nova pessoa
 
-Cada pessoa listada pode apresentar:
-
-- nome completo
-- foto ou avatar
-- idade
-- sexo, opcional conforme contexto
-- vínculo com o usuário
-- status geral
-- alerta ativo ou não
-- data e hora da próxima consulta
-- resumo visual do estado atual
-- ação principal de acesso
-
-### Exemplos de status possíveis
-- estável
-- atenção
-- alerta
-- sem atualização recente
-
----
-
-## 11. Ações disponíveis na tela
-
-### Ações principais
-- buscar pessoa
-- filtrar lista
-- abrir perfil detalhado da pessoa
-- cadastrar nova pessoa
-
-### Ações secundárias possíveis
-- ordenar por nome
-- ordenar por criticidade
-- ordenar por próxima consulta
-- visualizar apenas pessoas com alertas
-- visualizar apenas pessoas com compromissos próximos
-
----
-
-## 12. Regras de negócio do módulo
-
-- o conteúdo exibido depende do papel ativo do usuário
-- apenas usuários com vínculo válido podem visualizar uma pessoa na lista
-- apenas usuários com permissão adequada podem cadastrar nova pessoa
-- dados sensíveis detalhados não devem aparecer integralmente na listagem
-- alertas devem ter prioridade visual superior a informações comuns
-- compromissos próximos devem ser destacados de forma secundária, mas visível
-- a ausência de pessoas vinculadas deve acionar o estado vazio
-- a listagem deve considerar ordenação útil para o contexto de cuidado
-- o administrador pode ter visão ampliada, conforme política do sistema
-
----
-
-## 13. Fluxo principal
-
-### Fluxo principal 1 — Visualizar pessoas cuidadas
-1. usuário acessa o sistema
-2. usuário está em um papel com permissão para cuidado ou acompanhamento
-3. usuário entra em “Pessoas que Eu Cuido”
-4. sistema identifica vínculos disponíveis
-5. sistema carrega lista de pessoas vinculadas
-6. usuário visualiza os cards/lista
-7. usuário seleciona uma pessoa
-8. sistema redireciona para a tela de detalhes da pessoa
-
-### Fluxo principal 2 — Cadastrar nova pessoa
-1. usuário acessa “Pessoas que Eu Cuido”
+1. usuário acessa a tela
 2. usuário clica em “Cadastrar nova pessoa”
-3. sistema verifica permissão
-4. sistema abre fluxo de cadastro
-5. usuário preenche os dados
-6. sistema registra a nova pessoa e o vínculo
-7. sistema confirma o cadastro
-8. sistema retorna para a lista atualizada
+3. sistema verifica permissão de criação
+4. sistema abre o fluxo de cadastro
+5. usuário preenche os campos obrigatórios
+6. sistema valida os dados
+7. sistema cria o cadastro da pessoa
+8. sistema cria ou associa o vínculo com o usuário
+9. sistema exibe mensagem de sucesso
+10. sistema retorna para a lista atualizada
 
 ---
 
-## 14. Fluxos alternativos
+## 7. Fluxos alternativos
 
-### Fluxo alternativo 1 — Busca por nome
-1. usuário acessa a tela
-2. digita o nome no campo de busca
-3. sistema filtra os resultados em tempo real ou sob confirmação
-4. usuário seleciona a pessoa desejada
+### Alternativo A — Busca por nome
 
-### Fluxo alternativo 2 — Filtro por alerta
 1. usuário acessa a tela
-2. seleciona o filtro “Com alerta”
-3. sistema exibe apenas pessoas com eventos ativos
-
-### Fluxo alternativo 3 — Filtro por próxima consulta
-1. usuário acessa a tela
-2. seleciona filtro de consulta próxima
-3. sistema exibe apenas pessoas com compromissos próximos
+2. usuário digita no campo de busca
+3. sistema filtra os resultados
+4. tela exibe apenas pessoas compatíveis com o termo
+5. usuário seleciona a pessoa desejada
 
 ---
 
-## 15. Fluxos de exceção
+### Alternativo B — Busca sem resultado
 
-### Exceção 1 — Usuário sem vínculo
-- sistema não encontra pacientes vinculados
-- exibe estado vazio
-- orienta cadastro, convite ou solicitação de vínculo, conforme regra futura
-
-### Exceção 2 — Usuário sem permissão
-- sistema identifica que o papel ativo não permite acesso ao módulo
-- exibe mensagem de acesso indisponível
-- oferece retorno ao dashboard ou troca de papel
-
-### Exceção 3 — Falha de carregamento
-- sistema não consegue recuperar a lista
-- exibe mensagem de erro amigável
-- oferece opção de tentar novamente
-
-### Exceção 4 — Cadastro sem permissão
-- usuário tenta cadastrar nova pessoa
-- sistema bloqueia a ação
-- exibe mensagem de permissão insuficiente
+1. usuário digita no campo de busca
+2. sistema não encontra correspondência
+3. sistema exibe estado “nenhum resultado encontrado”
+4. usuário pode:
+   - limpar busca
+   - tentar outro termo
+   - cadastrar nova pessoa, se permitido
 
 ---
 
-## 16. Estados da interface
+### Alternativo C — Filtrar por alerta
 
-### Estado de carregamento
-- skeleton loading ou mensagem de carregamento
-- cards placeholders
+1. usuário acessa a tela
+2. usuário seleciona filtro “Com alerta”
+3. sistema exibe somente pessoas com alertas ativos
 
-### Estado com dados
-- lista normal com pessoas vinculadas
+---
 
-### Estado vazio
-- nenhuma pessoa vinculada
-- mensagem clara e ação sugerida
+### Alternativo D — Filtrar por próxima consulta
 
-### Estado de busca sem resultado
-- nenhum resultado encontrado para o termo pesquisado
-- opção de limpar busca
+1. usuário acessa a tela
+2. usuário seleciona filtro “Consulta próxima”
+3. sistema exibe somente pessoas com compromisso próximo
 
-### Estado de erro
-- falha ao carregar dados
+---
+
+### Alternativo E — Ordenar lista
+
+1. usuário acessa a tela
+2. usuário escolhe critério de ordenação
+3. sistema reorganiza a listagem
+
+Critérios possíveis:
+- nome
+- criticidade
+- próxima consulta
+- atualização mais recente
+
+---
+
+## 8. Fluxos de exceção
+
+### Exceção A — Usuário sem permissão de acesso
+
+1. usuário tenta acessar o módulo
+2. sistema identifica que o papel ativo não possui permissão
+3. sistema bloqueia a entrada
+4. sistema exibe mensagem de acesso indisponível
+5. sistema oferece:
+   - voltar ao dashboard
+   - trocar papel ativo
+
+---
+
+### Exceção B — Usuário sem pacientes vinculados
+
+1. usuário acessa o módulo
+2. sistema valida permissão
+3. sistema não encontra vínculos ativos
+4. sistema exibe estado vazio
+5. sistema oferece ação de cadastro ou instrução de próximo passo
+
+---
+
+### Exceção C — Falha ao carregar lista
+
+1. usuário acessa o módulo
+2. sistema tenta carregar dados
+3. ocorre falha na recuperação
+4. sistema exibe estado de erro
+5. sistema oferece botão “Tentar novamente”
+
+---
+
+### Exceção D — Tentativa de cadastro sem permissão
+
+1. usuário clica em “Cadastrar nova pessoa”
+2. sistema valida permissão
+3. sistema identifica que o usuário não pode cadastrar
+4. sistema bloqueia a ação
+5. sistema exibe mensagem adequada
+
+---
+
+### Exceção E — Tentativa de acessar detalhe sem vínculo válido
+
+1. usuário clica em uma pessoa listada ou tenta acessar diretamente
+2. sistema valida o vínculo e o contexto
+3. sistema identifica acesso inválido
+4. sistema impede entrada
+5. sistema exibe mensagem de restrição de acesso
+
+---
+
+## 9. Estados da tela
+
+### Estado 1 — Loading
+A tela mostra:
+- placeholders
+- skeletons
+- ou feedback visual de carregamento
+
+### Estado 2 — Lista carregada
+A tela mostra:
+- cabeçalho
+- resumo
+- busca
+- filtros
+- cards/lista de pessoas
+
+### Estado 3 — Lista vazia
+A tela mostra:
+- mensagem clara
+- explicação breve
+- CTA para cadastrar nova pessoa, quando permitido
+
+### Estado 4 — Busca sem resultado
+A tela mostra:
+- mensagem de nenhum resultado
+- botão de limpar busca
+
+### Estado 5 — Erro
+A tela mostra:
+- mensagem amigável
 - botão de tentar novamente
 
-### Estado bloqueado
-- usuário sem acesso ao módulo no papel ativo
+### Estado 6 — Bloqueado por permissão
+A tela mostra:
+- acesso não disponível
+- retorno ao dashboard
+- opção de trocar papel
 
 ---
 
-## 17. Requisitos de UX
+## 10. Regras de decisão do sistema
 
-- a tela deve permitir leitura rápida
-- o usuário deve identificar a situação geral de cada pessoa em poucos segundos
-- a ação principal deve estar visível sem esforço
-- a busca deve ser simples e previsível
-- filtros devem ser objetivos
-- alertas devem se destacar sem gerar excesso visual
-- o módulo deve reduzir ansiedade e aumentar sensação de controle
-- a navegação deve ser fácil para pessoas com baixa familiaridade digital
+O sistema deve decidir com base em:
 
----
-
-## 18. Requisitos de UI
-
-- usar hierarquia clara entre título, resumo e listagem
-- priorizar fontes grandes e boa legibilidade
-- destacar botão principal de cadastro
-- usar cards ou linhas com boa separação visual
-- usar badges consistentes para status e alertas
-- evitar excesso de informação em cada item
-- permitir boa leitura em mobile e desktop
-- o card deve mostrar contexto suficiente sem virar mini prontuário
+- usuário está autenticado?
+- qual é o papel ativo?
+- esse papel pode acessar o módulo?
+- existem vínculos com pacientes?
+- existem alertas ativos?
+- existem compromissos próximos?
+- o usuário pode cadastrar nova pessoa?
+- o vínculo permite abrir o detalhe?
 
 ---
 
-## 19. Requisitos técnicos de front-end
+## 11. Informações mínimas carregadas na listagem
 
-- componente de listagem reutilizável
-- componente de card de pessoa
-- suporte a filtros e busca
-- estados de loading, empty, error e blocked
-- suporte a ordenação
-- navegação para detalhe via botão ou clique no card
-- possibilidade futura de paginação ou carregamento incremental
-- compatibilidade com diferentes papéis ativos
+Para cada pessoa vinculada, o sistema deve tentar carregar:
 
----
-
-## 20. Estrutura sugerida de componentes
-
-### Página
-- `PeopleICarePage`
-
-### Componentes internos
-- `PeopleICareHeader`
-- `PeopleICareSummary`
-- `PeopleSearchBar`
-- `PeopleFilterBar`
-- `CarePersonCard`
-- `CarePersonStatusBadge`
-- `CarePersonAlertBadge`
-- `CarePersonNextAppointment`
-- `EmptyStatePeopleICare`
-- `ErrorStatePeopleICare`
+- identificador
+- nome
+- foto/avatar
+- idade
+- vínculo
+- status geral
+- alerta ativo
+- próxima consulta
+- última atualização relevante
 
 ---
 
-## 21. Campos mínimos para cadastro de nova pessoa
+## 12. Gatilhos de navegação
 
-Versão inicial sugerida:
-- nome completo
-- data de nascimento
-- sexo
-- telefone, opcional
-- contato de emergência
-- observações iniciais
-- tipo de vínculo com o usuário
-- permissões básicas de acesso
+### Entradas
+- menu
+- dashboard
+- retorno do cadastro
 
-### Campos futuros
-- endereço
-- documentos
-- dados clínicos estruturados
-- preferências de cuidado
-- informações de dispositivos conectados
+### Saídas
+- tela de detalhes da pessoa
+- fluxo de cadastro
+- dashboard
+- troca de papel
 
 ---
 
-## 22. Critérios de aceite
+## 13. Requisitos de UX do fluxo
 
-Este módulo será considerado funcional quando:
-
-- usuários autorizados conseguirem acessar a tela
-- a tela exibir corretamente a lista de pessoas vinculadas
-- a busca funcionar corretamente
-- os filtros funcionarem corretamente
-- o botão de cadastro estiver visível para quem tem permissão
-- o fluxo de abrir detalhes funcionar
-- o estado vazio estiver previsto
-- o estado de erro estiver previsto
-- o estado sem permissão estiver previsto
-- a experiência estiver coerente com o modelo de papel ativo
+- entrada rápida no módulo
+- leitura fácil da situação de cada pessoa
+- decisão rápida entre abrir detalhe ou continuar navegando
+- experiência previsível em caso de erro
+- clareza em estados vazios
+- confiança no tratamento de acesso e privacidade
 
 ---
 
-## 23. Fora de escopo neste momento
+## 14. Requisitos de UI do fluxo
 
-Não fazem parte deste spec, por enquanto:
-
-- contratação de profissionais
-- pagamentos
-- integrações reais com dispositivos
-- recomendação automática por IA
-- chat avançado dentro da listagem
-- relatórios clínicos completos nessa tela
-- edição avançada de vínculo
+- botão principal claramente visível
+- busca acessível
+- filtros simples
+- cards escaneáveis
+- alertas com destaque adequado
+- diferenciação clara entre estado normal, atenção e alerta
 
 ---
 
-## 24. Dependências deste módulo
+## 15. Impacto no front-end
 
-Este módulo depende de:
-- autenticação e papel ativo
-- cadastro de usuários
-- cadastro de pacientes
-- vínculo entre usuário e paciente
-- navegação para tela de detalhes
-- modelo de alertas
-- modelo de agenda
+Este fluxo exige:
+- carregamento inicial da página
+- renderização condicional por estado
+- filtros locais ou remotos
+- mecanismo de busca
+- navegação para detalhes
+- controle de permissões
+- exibição condicional do botão de cadastro
 
 ---
 
-## 25. Observações estratégicas
+## 16. Critérios de integridade do fluxo
 
-Este módulo é um dos centros operacionais do Home Care 4.0.
+O fluxo é considerado consistente quando:
+- todas as entradas possíveis estão previstas
+- todos os estados principais estão previstos
+- erros e bloqueios possuem resposta clara
+- o acesso ao detalhe respeita vínculo e permissão
+- a experiência não depende de interpretação implícita
 
-Ele não deve ser tratado como uma simples listagem. Ele funciona como ponto de entrada para o acompanhamento cotidiano e precisa transmitir:
-- clareza
-- controle
-- rapidez
-- segurança
+---
 
-Sua qualidade impacta diretamente a percepção geral de utilidade da plataforma.
+## 17. Observação estratégica
+
+Este fluxo é um dos fluxos centrais do TCC, porque conecta:
+- gestão de pessoas
+- acompanhamento cotidiano
+- acesso rápido à informação
+- ponto de partida para demais módulos do cuidado
+
+Ele deve ser tratado como um fluxo-base da plataforma.
